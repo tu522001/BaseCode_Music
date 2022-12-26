@@ -1,0 +1,5 @@
+include ':app'
+rootProject.name = "MUSIC2022"
+
+
+include ':permissionx'
