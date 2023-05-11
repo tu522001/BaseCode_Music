@@ -39,9 +39,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/_13sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_13sdp"
-                android:background="@drawable/a"
+                android:background="@color/white"
                 app:layout_constraintDimensionRatio="9:5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -52,7 +52,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout_top"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -61,14 +61,15 @@
                     android:id="@+id/img_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_26sdp"
                     android:background="@drawable/menu"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints" />
 
                 <TextView
+                    android:layout_marginTop="@dimen/_26sdp"
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
@@ -79,7 +80,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/img_menu"
                     app:layout_constraintEnd_toStartOf="@+id/img_btn_setting"
                     app:layout_constraintStart_toEndOf="@+id/img_menu"
-                    app:layout_constraintTop_toTopOf="@+id/img_menu"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints" />
 
                 <ImageButton

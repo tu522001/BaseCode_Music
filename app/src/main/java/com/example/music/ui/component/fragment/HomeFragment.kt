@@ -113,6 +113,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         autoSlideImages()
 
     }
+
+    // tự động chuyển ảnh photo above
     private fun autoSlideImages() {
         // Init timer
         if (mTimer == null) {
