@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/_20sdp"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+
+        android:id="@+id/img_genres"
+        android:layout_width="@dimen/_46sdp"
+        android:layout_height="@dimen/_46sdp"
+        android:src="@drawable/rectangle27"
+        app:layout_constraintBottom_toTopOf="@+id/tv_genres"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/tv_genres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="TextView"
+        android:textColor="#252627"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintEnd_toEndOf="@+id/img_genres"
+        app:layout_constraintStart_toStartOf="@+id/img_genres"
+        app:layout_constraintTop_toBottomOf="@+id/img_genres" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="@dimen/_11sdp"
+        android:layout_height="@dimen/_11sdp"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/img_genres"
+        app:layout_constraintEnd_toEndOf="@+id/img_genres"
+        app:layout_constraintStart_toStartOf="@+id/img_genres"
+        app:layout_constraintTop_toTopOf="@+id/img_genres"
+        app:srcCompat="@drawable/ellipse_6"
+        tools:layout_editor_absoluteY="23dp" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="@dimen/_7sdp"
+        android:layout_height="@dimen/_7sdp"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/img_genres"
+        app:layout_constraintEnd_toEndOf="@+id/img_genres"
+        app:layout_constraintStart_toStartOf="@+id/img_genres"
+        app:layout_constraintTop_toTopOf="@+id/img_genres"
+        app:srcCompat="@drawable/ellipse_7" />
+</androidx.constraintlayout.widget.ConstraintLayout>

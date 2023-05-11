@@ -1,5 +1,6 @@
-package com.example.music.data
+package com.example.music.data.repository
 
+import com.example.music.data.Resource
 import com.example.music.data.dto.frames.DataFrames
 import com.example.music.data.dto.localprank.MyFolderAudio
 import com.example.music.data.dto.localprank.MyFolderImage
@@ -21,7 +22,6 @@ interface DataRepositorySource {
     suspend fun addToFavourite(id: String): Flow<Resource<Boolean>>
     suspend fun removeFromFavourite(id: String): Flow<Resource<Boolean>>
     suspend fun isFavourite(id: String): Flow<Resource<Boolean>>
-    suspend fun requestFrames(): Flow<Resource<DataFrames>>
     suspend fun requestCategorySound(filter: String): Flow<Resource<ResponseCategorySound>>
     suspend fun requestSound(filter: String): Flow<Resource<ResponseSound>>
     suspend fun requestVideo(filter: String): Flow<Resource<ResponseVideo>>
@@ -34,4 +34,13 @@ interface DataRepositorySource {
     suspend fun requestCategoryVideo(filter: String): Flow<Resource<ResponsePrankRecordFolder>>
     suspend fun requestItemGif(filter: String): Flow<Resource<ResponsePrankRecordItem>>
     suspend fun requestItemVideo(filter: String): Flow<Resource<ResponsePrankRecordItem>>
+    suspend fun signup(email:String,password:String)
+
+    suspend fun requestFrames(): Flow<Resource<DataFrames>>
+    suspend fun requestFramesImage(): Flow<Resource<DataFrames>>
+
+    suspend fun requestNewReleaseSong(page: Int, limit: Int, order: String): Flow<Resource<ResponseSong>>
+    suspend fun requestTopTrendingSong(page: Int, limit: Int, order: String): Flow<Resource<ResponseSong>>
+    suspend fun requestTopDownLoadSong(page: Int, limit: Int, order: String): Flow<Resource<ResponseSong>>
+    suspend fun requestGenres(): Flow<Resource<ResponseGenres>>
 }

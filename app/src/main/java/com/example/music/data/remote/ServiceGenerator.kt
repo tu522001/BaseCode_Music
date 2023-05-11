@@ -17,12 +17,14 @@ import javax.inject.Singleton
  * Created by TruyenIT
  */
 
-private const val timeoutRead = 30   //In seconds
+
+private const val timeoutRead = 30   //In seconds // Thời gian timeout khi đọc dữ liệu là 30 giây.
 private const val contentType = "Content-Type"
-private const val contentTypeValue = "application/json"
-private const val timeoutConnect = 30   //In seconds
+private const val contentTypeValue = "application/json" // Giá trị của header Content-Type là application/json.
+private const val timeoutConnect = 30   //In seconds  // Thời gian timeout khi kết nối là 30 giây.
 
 @Singleton
+// Class ServiceGenerator được đánh dấu là @Singleton để đảm bảo rằng chỉ có một instance của nó trong toàn bộ ứng dụng.
 class ServiceGenerator @Inject constructor() {
     private val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
     private val retrofit: Retrofit

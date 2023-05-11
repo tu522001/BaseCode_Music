@@ -11,5 +11,9 @@ import retrofit2.http.Query
 
 interface VideoService {
     @GET("videotroll/search")
-    suspend fun fetchVideo(@Query("filter") filter: String, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Response<ResponseVideo>
+    suspend fun fetchVideo(
+        @Query("filter") filter: String,
+        @Query("pageIndex") pageIndex: Int,
+        @Query("pageSize") pageSize: Int
+    ): Response<ResponseVideo>
 }

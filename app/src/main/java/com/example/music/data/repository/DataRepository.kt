@@ -1,5 +1,6 @@
-package com.example.music.data
+package com.example.music.data.repository
 
+import com.example.music.data.Resource
 import com.example.music.data.dto.frames.DataFrames
 import com.example.music.data.dto.localprank.MyFolderAudio
 import com.example.music.data.dto.localprank.MyFolderImage
@@ -22,7 +23,8 @@ import kotlin.coroutines.CoroutineContext
  * Created by TruyenIT
  */
 
-class DataRepository @Inject constructor(private val remoteRepository: RemoteData, private val localRepository: LocalData, private val ioDispatcher: CoroutineContext) : DataRepositorySource {
+class DataRepository @Inject constructor(private val remoteRepository: RemoteData, private val localRepository: LocalData, private val ioDispatcher: CoroutineContext) :
+    DataRepositorySource {
 
     override suspend fun requestRecipes(): Flow<Resource<Recipes>> {
         return flow {
@@ -72,6 +74,13 @@ class DataRepository @Inject constructor(private val remoteRepository: RemoteDat
             emit(remoteRepository.requestFrames())
         }.flowOn(ioDispatcher)
     }
+
+    override suspend fun requestFramesImage(): Flow<Resource<DataFrames>> {
+        return flow {
+            emit(remoteRepository.requestDataFramesImage())
+        }.flowOn(ioDispatcher)
+    }
+
 
     override suspend fun requestCategorySound(filter: String): Flow<Resource<ResponseCategorySound>> {
         return flow {
@@ -144,4 +153,45 @@ class DataRepository @Inject constructor(private val remoteRepository: RemoteDat
             emit(remoteRepository.requestItemVideo(filter))
         }.flowOn(ioDispatcher)
     }
+
+    override suspend fun signup(
+        email: String,
+        password: String
+    ){
+
+    }
+
+    override suspend fun requestNewReleaseSong(page: Int, limit: Int, order: String):
+            Flow<Resource<ResponseSong>> {
+        return flow{
+            emit(remoteRepository.requestDataNewReleaseSong(page, limit, order))
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun requestTopTrendingSong(
+        page: Int,
+        limit: Int,
+        order: String
+    ): Flow<Resource<ResponseSong>> {
+        return flow{
+            emit(remoteRepository.requestDataTopTrendingSong(page, limit, order))
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun requestTopDownLoadSong(
+        page: Int,
+        limit: Int,
+        order: String
+    ): Flow<Resource<ResponseSong>> {
+        return flow{
+            emit(remoteRepository.requestDataTopDownLoadSong(page, limit, order))
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun requestGenres(): Flow<Resource<ResponseGenres>> {
+        return flow{
+            emit(remoteRepository.requestDataGenres())
+        }.flowOn(ioDispatcher)
+    }
+
 }

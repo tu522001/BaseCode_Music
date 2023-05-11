@@ -1,6 +1,7 @@
 package com.example.music.data
 
 // A generic class that contains data and status about loading this data.
+// Một lớp chung chứa dữ liệu và trạng thái tải dữ liệu này.
 sealed class Resource<T>(
         val data: T? = null,
         val errorCode: Int? = null

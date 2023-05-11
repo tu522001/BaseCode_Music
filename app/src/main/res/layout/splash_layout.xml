@@ -6,8 +6,6 @@
     android:gravity="center_horizontal"
     android:layout_height="match_parent">
 
-
-
     <TextView
         android:fontFamily="@font/fruit_days"
         android:textSize="24dp"

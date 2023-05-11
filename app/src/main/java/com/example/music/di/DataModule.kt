@@ -1,8 +1,8 @@
 
 package com.example.music.di
 
-import com.example.music.data.DataRepository
-import com.example.music.data.DataRepositorySource
+import com.example.music.data.repository.DataRepository
+import com.example.music.data.repository.DataRepositorySource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

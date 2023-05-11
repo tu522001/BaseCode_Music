@@ -32,6 +32,11 @@ import javax.inject.Inject
 
 class LocalData @Inject constructor(val context: Context) {
 
+    /**
+     * phương thức này kiểm tra đăng nhập bằng cách so sánh yêu cầu đăng nhập được truyền vào với một giá trị mặc định đã được cung cấp.
+     * Nếu đăng nhập thành công, nó trả về một đối tượng LoginResponse. Nếu không, nó trả về một đối tượng DataError.
+     *
+     * */
     fun doLogin(loginRequest: LoginRequest): Resource<LoginResponse> {
         if (loginRequest == LoginRequest("ahmed@ahmed.ahmed", "ahmed")) {
             return Resource.Success(
@@ -45,17 +50,28 @@ class LocalData @Inject constructor(val context: Context) {
         return Resource.DataError(PASS_WORD_ERROR)
     }
 
+    /**
+     * getCachedFavourites(): phương thức này lấy danh sách các yêu thích từ bộ nhớ cache và trả về một đối tượng Set<String>
+     * */
     fun getCachedFavourites(): Resource<Set<String>> {
         val sharedPref = context.getSharedPreferences(SHARED_PREFERENCES_FILE_NAME, 0)
         return Resource.Success(sharedPref.getStringSet(FAVOURITES_KEY, setOf()) ?: setOf())
     }
 
+    /**
+     * isFavourite(id: String): phương thức này kiểm tra xem một id đã được đánh dấu yêu thích hay chưa.
+     * Nó lấy danh sách yêu thích từ bộ nhớ cache và kiểm tra xem id được truyền vào có nằm trong danh sách hay không.
+     * Nếu có, nó trả về true, ngược lại, nó trả về false.
+     * */
     fun isFavourite(id: String): Resource<Boolean> {
         val sharedPref = context.getSharedPreferences(SHARED_PREFERENCES_FILE_NAME, 0)
         val cache = sharedPref.getStringSet(FAVOURITES_KEY, setOf<String>()) ?: setOf()
         return Resource.Success(cache.contains(id))
     }
 
+    /**
+     * cacheFavourites(ids: Set<String>): phương thức này lưu danh sách yêu thích vào bộ nhớ cache và trả về true nếu lưu thành công.
+     * */
     fun cacheFavourites(ids: Set<String>): Resource<Boolean> {
         val sharedPref = context.getSharedPreferences(SHARED_PREFERENCES_FILE_NAME, 0)
         val editor: SharedPreferences.Editor = sharedPref.edit()
@@ -64,6 +80,10 @@ class LocalData @Inject constructor(val context: Context) {
         val isSuccess = editor.commit()
         return Resource.Success(isSuccess)
     }
+
+    /**
+     *removeFromFavourites(id: String): phương thức này xóa id khỏi danh sách yêu thích và trả về true nếu xóa thành công.
+     */
 
     fun removeFromFavourites(id: String): Resource<Boolean> {
         val sharedPref = context.getSharedPreferences(SHARED_PREFERENCES_FILE_NAME, 0)
@@ -82,7 +102,9 @@ class LocalData @Inject constructor(val context: Context) {
     }
 
     /**
-     *
+     *favoriteSound(item: SoundPrank): phương thức này thực hiện thao tác yêu thích cho một âm thanh cụ thể.
+     * Nó kiểm tra xem âm thanh đã được đánh dấu yêu thích trước đó hay chưa và trả về true
+     * nếu âm thanh được đánh dấu yêu thích sau khi phương thức được gọi và ngược lại.
      */
 
     fun favoriteSound(item: SoundPrank): Boolean {
@@ -111,6 +133,12 @@ class LocalData @Inject constructor(val context: Context) {
 
     }
 
+    /**
+     * favoriteSoundFolder(item: SoundPrank): phương thức này thực hiện thao tác yêu thích cho một thư mục âm thanh cụ thể.
+     * Nó tìm kiếm trong danh sách các thư mục âm thanh đã được đánh dấu yêu thích trước đó. Nếu thư mục âm thanh đang được thao tác
+     * đã được đánh dấu yêu thích trước đó, phương thức sẽ xóa nó khỏi danh sách yêu thích và trả về false.
+     * Nếu thư mục âm thanh chưa được đánh dấu yêu thích trước
+     * */
     fun favoriteSoundFolder(item: SoundPrank): Boolean {
         Log.e("TAG", "favoriteSoundFolder: favorite" )
         var listSoundFolder = Hawk.get<ArrayList<SoundFolderPrank>>(LIST_FOLDER_SOUND_FAVORITE, ArrayList())

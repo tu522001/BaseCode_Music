@@ -45,6 +45,41 @@ constructor(private val serviceGenerator: ServiceGenerator, private val networkC
         }
     }
 
+    override suspend fun requestDataFramesImage(): Resource<DataFrames> {
+        TODO("Not yet implemented")
+    }
+
+//    override suspend fun requestDataFramesImage(): Resource<DataFrames> {
+//        val framesServices = serviceGenerator.createService(ApiService::class.java)
+//        return when (val response = processCall(framesServices::getData)) {
+//            is DataFrames -> {
+//                Resource.Success(data = response as DataFrames)
+//            }
+//            else -> {
+//                Resource.DataError(errorCode = response as Int)
+//            }
+//        }
+//    }
+
+
+
+//    override suspend fun requestItemVideo(filter: String): Resource<ResponsePrankRecordItem> {
+//        val itemVideoService = serviceGenerator.createService(PrankItemVideoService::class.java)
+//        return when (val response = processCall { itemVideoService.fetchItemVideo(filter, 0, 1000, "name") }) {
+//            is ResponsePrankRecordItem -> {
+//                Resource.Success(data = response as ResponsePrankRecordItem)
+//            }
+//            else -> {
+//                Resource.DataError(errorCode = response as Int)
+//            }
+//        }
+//    }
+
+
+
+//
+//    getDataRelease
+
     override suspend fun requestSoundCategory(filter: String): Resource<ResponseCategorySound> {
         val categorySoundService = serviceGenerator.createService(SoundCategoryService::class.java)
         return when (val response = processCall { categorySoundService.fetchCategorySoynd(filter, 0, 100) }) {
@@ -56,6 +91,9 @@ constructor(private val serviceGenerator: ServiceGenerator, private val networkC
             }
         }
     }
+
+
+
 
     override suspend fun requestSound(filter: String): Resource<ResponseSound> {
         val soundService = serviceGenerator.createService(SoundService::class.java)
@@ -157,4 +195,64 @@ constructor(private val serviceGenerator: ServiceGenerator, private val networkC
             NETWORK_ERROR
         }
     }
+
+    override suspend fun requestDataNewReleaseSong(page: Int, limit: Int, order: String): Resource<ResponseSong> {
+        val framesServices = serviceGenerator.createService(ApiNewReleaseService::class.java)
+        return when (val response = processCall {
+            framesServices.fetchDataRelease(page, limit, order)
+        }) {
+            is ResponseSong -> {
+                Resource.Success(data = response as ResponseSong)
+            }
+            else -> {
+                Resource.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+
+    override suspend fun requestDataTopTrendingSong(page: Int, limit: Int, order: String): Resource<ResponseSong> {
+        val framesServices = serviceGenerator.createService(ApiTopTrendingService::class.java)
+        return when (val response = processCall {
+            framesServices.fetchDataTopTrending(page, limit, order)
+        }) {
+            is ResponseSong -> {
+                Resource.Success(data = response as ResponseSong)
+            }
+            else -> {
+                Resource.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+    override suspend fun requestDataTopDownLoadSong(page: Int, limit: Int, order: String): Resource<ResponseSong> {
+        val framesServices = serviceGenerator.createService(ApiTopDownloadService::class.java)
+        return when (val response = processCall {
+            framesServices.fetchDataTopDownload(page, limit, order)
+        }) {
+            is ResponseSong -> {
+                Resource.Success(data = response as ResponseSong)
+            }
+            else -> {
+                Resource.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+    override suspend fun requestDataGenres(): Resource<ResponseGenres> {
+        val framesServices = serviceGenerator.createService(ApiGenresService::class.java)
+        return when (val response = processCall {
+            framesServices.fetchDataGenres()
+        }) {
+            is ResponseGenres -> {
+                Resource.Success(data = response as ResponseGenres)
+            }
+            else -> {
+                Resource.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+
+
 }

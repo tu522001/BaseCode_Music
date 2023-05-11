@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-platform-android'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
+//    id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
 }
 //apply plugin: 'com.google.gms.google-services'
 //apply plugin: 'com.google.firebase.crashlytics'
@@ -194,6 +195,34 @@ dependencies {
     //
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 
+    // bo góc Image bằng cách sử dụng thư viện CircleImageView
+    implementation "de.hdodenhof:circleimageview:3.1.0"
+
+    // pixels to sdp
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
+    // pixels to ssp
+    implementation 'com.intuit.ssp:ssp-android:1.1.0'
+
+    // Glide Image
+    implementation "com.github.bumptech.glide:glide:4.14.2"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.15.0"
+
+    //Circleindicator
+    implementation 'me.relex:circleindicator:2.1.6'
+
+    implementation 'com.google.android.material:material:1.8.0'
+    // Viewpager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    // timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //circleindicator
+    implementation 'me.relex:circleindicator:2.1.6'
+
+
+}
+task prepareKotlinBuildScriptModel {
 
 }
 kapt {

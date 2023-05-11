@@ -30,3 +30,23 @@ data class Frames(
     @Json(name = "defines")
     val defines: List<DefinesFrames> = listOf(),
 ) : Parcelable
+
+{
+    fun toImage() : List<Images> {
+        val images = mutableListOf<Images>()
+
+        defines.forEach { defineX ->
+            for (i in defineX.start until defineX.end) {
+                images.add(
+                    Images(
+                        url = "https://mystoragetm.s3.ap-southeast-1.amazonaws.com/Frames/ClassicFrames/" + folder + "/" + folder + "_frame_" + i+ ".png",
+                        isEnd = i == defines.size - 1, folder = folder, fileName =  folder + "_frame_" + i+ ".png"
+                    )
+                )
+            }
+        }
+
+
+        return images
+    }
+}
