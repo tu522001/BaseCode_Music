@@ -12,13 +12,9 @@ import com.example.music.data.dto.response.ResponseSong
 import com.example.music.databinding.FragmentHomeBinding
 import com.example.music.ui.base.BaseFragment
 import com.example.music.ui.component.adapter.*
-import com.example.music.ui.component.viewmodel.GenresViewModel
-import com.example.music.ui.component.viewmodel.ReleaseViewModel
-import com.example.music.ui.component.viewmodel.TopDownLoadViewModel
-import com.example.music.ui.component.viewmodel.TopTrendingViewModel
+import com.example.music.ui.component.viewmodel.*
 import com.example.music.utils.observe
 import dagger.hilt.android.AndroidEntryPoint
-import java.sql.Time
 import java.util.*
 
 @AndroidEntryPoint
@@ -28,16 +24,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val topTrendingViewModel by viewModels<TopTrendingViewModel>()
     private val topDownLoadViewModel by viewModels<TopDownLoadViewModel>()
     private val genresViewModel by viewModels<GenresViewModel>()
+    private val photoAboveViewModel by viewModels<PhotoAboveViewModel>()
     private lateinit var genresAdapter: GenresAdapter
     private lateinit var newReleaseAdapter: NewReleaseAdapter
     private lateinit var topDownloadAdapter: TopDownloadAdapter
     private lateinit var topTrendingAdapter: TopTrendingAdapter
     private lateinit var photoAboveAdapter: PhotoAboveAdapter
+
+    private var mTimer: Timer? = null
+    private var photoList: List<String> = listOf()
     private var genresList: List<Genres> = listOf()
     private var newReleaseList: List<Song> = listOf()
     private var topTrendingList: List<Song> = listOf()
     private var topDownLoadList: List<Song> = listOf()
-    private lateinit var mTimer : Time
+
     override fun getDataBinding(): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)
     }
@@ -102,6 +102,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             false
         )
 
+        photoAboveAdapter = PhotoAboveAdapter(this.requireContext(),
+            photoList.toMutableList()
+        )
         binding.viewpager.adapter = photoAboveAdapter
 
         binding.circleIndicator.setViewPager(binding.viewpager)
@@ -110,8 +113,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         autoSlideImages()
 
     }
-
     private fun autoSlideImages() {
+        // Init timer
         if (mTimer == null) {
             mTimer = Timer()
         }
@@ -119,13 +122,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         mTimer?.schedule(object : TimerTask() {
             override fun run() {
                 Handler(Looper.getMainLooper()).post {
-                    val currentItem = viewPager.currentItem
-                    val totalItem = mListPhoto.size - 1
-                    if (currentItem < totalItem) {
-                        viewPager.currentItem = currentItem + 1
-                    } else {
-                        viewPager.currentItem = 0
-                    }
+                    val currentItem = binding.viewpager.currentItem
+                    val totalItem = photoList.size - 1
+                    binding.viewpager.currentItem = if (currentItem < totalItem) currentItem + 1 else 0
                 }
             }
         }, 500, 3000)
@@ -137,6 +136,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         topTrendingViewModel.getTopTrendingSongs(page = 1, limit = 20, "trending")
         topDownLoadViewModel.getTopDownLoadSongs(page = 1, limit = 5, "download")
         genresViewModel.getGenresSongs()
+        photoAboveViewModel.getPhotoAbove()
     }
 
     override fun addObservers() {
@@ -145,6 +145,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         observe(topTrendingViewModel.topTrendingSongs, ::handleTopTrendingSong)
         observe(topDownLoadViewModel.topDownLoadSongs, ::handleTopDownLoadSong)
         observe(genresViewModel.genresSongs, ::handleGenresSong)
+//        observe(photoAboveViewModel.photoAbove,::handlePhotoAbove)
     }
 
     private fun handleNewReleaseSong(resource: Resource<ResponseSong>) {
@@ -182,9 +183,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             resource.data.let {
                 genresList = it.data
             }
+            resource.data.ads.let {
+                photoList = it
+            }
             genresAdapter.updateData(genresList)
-
+            photoAboveAdapter.updateData(photoList)
         }
     }
+
+//    private fun handlePhotoAbove(resource: Resource<ResponseGenres>) {
+//        if (resource.data != null) {
+//            resource.data.let {
+//                photoList = it.ads
+//            }
+//            photoAboveAdapter.updateData(photoList)
+//        }
+//    }
 
 }

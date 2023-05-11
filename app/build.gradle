@@ -220,7 +220,8 @@ dependencies {
     //circleindicator
     implementation 'me.relex:circleindicator:2.1.6'
 
-
+    // ImageSlideshow
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
 }
 task prepareKotlinBuildScriptModel {
 

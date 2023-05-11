@@ -254,5 +254,20 @@ constructor(private val serviceGenerator: ServiceGenerator, private val networkC
     }
 
 
+    override suspend fun requestDataPhotoAbove(): Resource<ResponseGenres> {
+        val framesServices = serviceGenerator.createService(ApiPhotoAboveService::class.java)
+        return when (val response = processCall {
+            framesServices.fetchDataPhotoAbove()
+        }) {
+            is ResponseGenres -> {
+                Resource.Success(data = response as ResponseGenres)
+            }
+            else -> {
+                Resource.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+
 
 }

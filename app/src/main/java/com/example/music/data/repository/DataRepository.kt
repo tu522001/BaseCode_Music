@@ -194,4 +194,9 @@ class DataRepository @Inject constructor(private val remoteRepository: RemoteDat
         }.flowOn(ioDispatcher)
     }
 
+    override suspend fun requestPhotoAbove(): Flow<Resource<ResponseGenres>> {
+        return flow{
+            emit(remoteRepository.requestDataPhotoAbove())
+        }.flowOn(ioDispatcher)
+    }
 }

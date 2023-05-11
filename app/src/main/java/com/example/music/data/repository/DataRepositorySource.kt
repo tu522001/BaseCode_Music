@@ -43,4 +43,5 @@ interface DataRepositorySource {
     suspend fun requestTopTrendingSong(page: Int, limit: Int, order: String): Flow<Resource<ResponseSong>>
     suspend fun requestTopDownLoadSong(page: Int, limit: Int, order: String): Flow<Resource<ResponseSong>>
     suspend fun requestGenres(): Flow<Resource<ResponseGenres>>
+    suspend fun requestPhotoAbove(): Flow<Resource<ResponseGenres>>
 }

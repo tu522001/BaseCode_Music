@@ -28,5 +28,6 @@ internal interface RemoteDataSource {
     suspend fun requestDataTopTrendingSong(page: Int, limit: Int, order: String): Resource<ResponseSong>
     suspend fun requestDataTopDownLoadSong(page: Int, limit: Int, order: String): Resource<ResponseSong>
     suspend fun requestDataGenres(): Resource<ResponseGenres>
+    suspend fun requestDataPhotoAbove(): Resource<ResponseGenres>
 
 }
