@@ -30,4 +30,6 @@ internal interface RemoteDataSource {
     suspend fun requestDataGenres(): Resource<ResponseGenres>
     suspend fun requestDataPhotoAbove(): Resource<ResponseGenres>
 
+    suspend fun requestDataSearchSong(page: Int, limit: Int, order: String,name: String): Resource<ResponseSong>
+
 }

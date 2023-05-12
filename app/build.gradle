@@ -222,6 +222,10 @@ dependencies {
 
     // ImageSlideshow
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+
+    // CircularSeekBar
+    implementation 'me.tankery.lib:circularSeekBar:1.4.2'
+
 }
 task prepareKotlinBuildScriptModel {
 

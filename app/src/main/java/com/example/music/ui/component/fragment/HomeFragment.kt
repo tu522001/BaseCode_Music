@@ -1,9 +1,14 @@
 package com.example.music.ui.component.fragment
 
+import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.music.R
 import com.example.music.data.Resource
 import com.example.music.data.dto.modelSong.Genres
 import com.example.music.data.dto.modelSong.Song
@@ -11,6 +16,8 @@ import com.example.music.data.dto.response.ResponseGenres
 import com.example.music.data.dto.response.ResponseSong
 import com.example.music.databinding.FragmentHomeBinding
 import com.example.music.ui.base.BaseFragment
+import com.example.music.ui.base.listeners.onClickItemListener
+import com.example.music.ui.component.activities.MusicPlayingActivity
 import com.example.music.ui.component.adapter.*
 import com.example.music.ui.component.viewmodel.*
 import com.example.music.utils.observe
@@ -18,13 +25,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), onClickItemListener {
 
-    private val releaseViewModel by viewModels<ReleaseViewModel>()
+    private val releaseViewModel by activityViewModels<ReleaseViewModel>()
     private val topTrendingViewModel by viewModels<TopTrendingViewModel>()
     private val topDownLoadViewModel by viewModels<TopDownLoadViewModel>()
     private val genresViewModel by viewModels<GenresViewModel>()
     private val photoAboveViewModel by viewModels<PhotoAboveViewModel>()
+    private val searchViewModel by viewModels<SearchViewModel>()
+
     private lateinit var genresAdapter: GenresAdapter
     private lateinit var newReleaseAdapter: NewReleaseAdapter
     private lateinit var topDownloadAdapter: TopDownloadAdapter
@@ -35,6 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private var photoList: List<String> = listOf()
     private var genresList: List<Genres> = listOf()
     private var newReleaseList: List<Song> = listOf()
+    private var searchList: List<Song> = listOf()
     private var topTrendingList: List<Song> = listOf()
     private var topDownLoadList: List<Song> = listOf()
 
@@ -64,7 +74,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         // New Release
         binding.recyclerViewNewRelease.layoutManager = linearLayoutManager
 
-        newReleaseAdapter = NewReleaseAdapter(this.requireContext(), newReleaseList.toMutableList())
+        newReleaseAdapter =
+            NewReleaseAdapter(this.requireContext(), this, newReleaseList.toMutableList())
         binding.recyclerViewNewRelease.adapter = newReleaseAdapter
 
         binding.recyclerViewNewRelease.setHasFixedSize(true)
@@ -102,7 +113,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             false
         )
 
-        photoAboveAdapter = PhotoAboveAdapter(this.requireContext(),
+        photoAboveAdapter = PhotoAboveAdapter(
+            this.requireContext(),
             photoList.toMutableList()
         )
         binding.viewpager.adapter = photoAboveAdapter
@@ -111,6 +123,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         photoAboveAdapter.registerDataSetObserver(binding.circleIndicator.dataSetObserver)
 
         autoSlideImages()
+
+        binding.imgBtnSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_musicPlayingFragment)
+        }
 
     }
 
@@ -126,7 +142,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 Handler(Looper.getMainLooper()).post {
                     val currentItem = binding.viewpager.currentItem
                     val totalItem = photoList.size - 1
-                    binding.viewpager.currentItem = if (currentItem < totalItem) currentItem + 1 else 0
+                    binding.viewpager.currentItem =
+                        if (currentItem < totalItem) currentItem + 1 else 0
                 }
             }
         }, 500, 3000)
@@ -134,11 +151,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun initData() {
         super.initData()
-        releaseViewModel.getNetReleaseSongs(page = 1, limit = 20, "release")
+//        releaseViewModel.getNetReleaseSongs(page = 1, limit = 20, "release")
         topTrendingViewModel.getTopTrendingSongs(page = 1, limit = 20, "trending")
         topDownLoadViewModel.getTopDownLoadSongs(page = 1, limit = 5, "download")
         genresViewModel.getGenresSongs()
         photoAboveViewModel.getPhotoAbove()
+        searchViewModel.getSearchSongs(1, 20, "release", "")
     }
 
     override fun addObservers() {
@@ -147,7 +165,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         observe(topTrendingViewModel.topTrendingSongs, ::handleTopTrendingSong)
         observe(topDownLoadViewModel.topDownLoadSongs, ::handleTopDownLoadSong)
         observe(genresViewModel.genresSongs, ::handleGenresSong)
-//        observe(photoAboveViewModel.photoAbove,::handlePhotoAbove)
+        observe(searchViewModel.searchSongs, ::handleSearchSong)
     }
 
     private fun handleNewReleaseSong(resource: Resource<ResponseSong>) {
@@ -193,13 +211,41 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-//    private fun handlePhotoAbove(resource: Resource<ResponseGenres>) {
-//        if (resource.data != null) {
-//            resource.data.let {
-//                photoList = it.ads
-//            }
-//            photoAboveAdapter.updateData(photoList)
-//        }
-//    }
+    private fun handleSearchSong(resource: Resource<ResponseSong>) {
+        if (resource.data != null) {
+            resource.data.let {
+                searchList = it.data
+            }
+
+
+        }
+    }
+
+    override fun onCLick(position: Int, song: Song) {
+        Log.d("RRR", "position : " + position + " , song : " + song)
+        val myObject = Song(
+            song.album_id,
+            song.album_image,
+            song.album_name,
+            song.artist_id,
+            song.artist_idstr,
+            song.artist_name,
+            song.audio,
+            song.audiodownload,
+            song.audiodownload_allowed,
+            song.duration,
+            song.id,
+            song.image,
+            song.license_ccurl,
+            song.name,
+            song.releasedate,
+            song.thumbnail
+        )
+        val intent = Intent(activity, MusicPlayingActivity::class.java)
+        intent.putExtra("song_object", myObject)
+        startActivity(intent)
+
+
+    }
 
 }

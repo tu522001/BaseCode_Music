@@ -211,6 +211,21 @@ constructor(private val serviceGenerator: ServiceGenerator, private val networkC
     }
 
 
+    override suspend fun requestDataSearchSong(page: Int, limit: Int, order: String,name : String): Resource<ResponseSong> {
+        val framesServices = serviceGenerator.createService(ApiSearchService::class.java)
+        return when (val response = processCall {
+            framesServices.fetchDataSearch(page, limit, order,name)
+        }) {
+            is ResponseSong -> {
+                Resource.Success(data = response as ResponseSong)
+            }
+            else -> {
+                Resource.DataError(errorCode = response as Int)
+            }
+        }
+    }
+
+
     override suspend fun requestDataTopTrendingSong(page: Int, limit: Int, order: String): Resource<ResponseSong> {
         val framesServices = serviceGenerator.createService(ApiTopTrendingService::class.java)
         return when (val response = processCall {

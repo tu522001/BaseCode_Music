@@ -78,13 +78,13 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/img_menu"
-                    app:layout_constraintEnd_toStartOf="@+id/img_btn_setting"
+                    app:layout_constraintEnd_toStartOf="@+id/img_btn_search"
                     app:layout_constraintStart_toEndOf="@+id/img_menu"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints" />
 
                 <ImageButton
-                    android:id="@+id/img_btn_setting"
+                    android:id="@+id/img_btn_search"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_marginTop="16dp"

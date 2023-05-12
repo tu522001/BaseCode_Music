@@ -188,6 +188,17 @@ class DataRepository @Inject constructor(private val remoteRepository: RemoteDat
         }.flowOn(ioDispatcher)
     }
 
+    override suspend fun requestSearchSong(
+        page: Int,
+        limit: Int,
+        order: String,
+        name : String
+    ): Flow<Resource<ResponseSong>> {
+        return flow{
+            emit(remoteRepository.requestDataSearchSong(page, limit, order,name))
+        }.flowOn(ioDispatcher)
+    }
+
     override suspend fun requestGenres(): Flow<Resource<ResponseGenres>> {
         return flow{
             emit(remoteRepository.requestDataGenres())
