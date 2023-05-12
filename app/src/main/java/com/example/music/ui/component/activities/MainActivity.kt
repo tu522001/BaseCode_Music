@@ -11,30 +11,40 @@ import com.example.music.ui.base.BaseActivity
 import com.example.music.ui.component.adapter.GenresAdapter
 import com.example.music.ui.component.fragment.HomeFragment
 import com.example.music.ui.component.fragment.PlaylistFragment
-import com.example.music.ui.component.viewmodel.ReleaseViewModel
+import com.example.music.ui.component.viewmodel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>(){
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val releaseViewModel by viewModels<ReleaseViewModel>()
+    private val topTrendingViewModel by viewModels<TopTrendingViewModel>()
+    private val topDownLoadViewModel by viewModels<TopDownLoadViewModel>()
+    private val genresViewModel by viewModels<GenresViewModel>()
+    private val photoAboveViewModel by viewModels<PhotoAboveViewModel>()
+
     override fun getViewBinding(): ActivityMainBinding {
-     return ActivityMainBinding.inflate(layoutInflater)
+        return ActivityMainBinding.inflate(layoutInflater)
     }
 
     override fun initData() {
         super.initData()
+        /** viết ViewModel vào View để dữ liệu cập nhập trực tiếp từ dữ liệu ViewModel trong View nghĩa là
+        khi tôi chuyển màn từ Discover sang các màn khác ví dụ : khi tôi chuyển từ màn Discover sang Playlist xong tôi lại chuyển lại
+        từ màn Playlist sang màn Discover thì dữ liệu của tôi đã được cập nhật luôn trực tiếp khi vào view rồi không cần phải thông
+        qua ViewModel xong với về view nữa */
         releaseViewModel.getNetReleaseSongs(page = 1, limit = 20, "release")
+        topTrendingViewModel.getTopTrendingSongs(page = 1, limit = 20, "trending")
+        topDownLoadViewModel.getTopDownLoadSongs(page = 1, limit = 5, "download")
+        genresViewModel.getGenresSongs()
+        photoAboveViewModel.getPhotoAbove()
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-
-
 
         loadFragment(HomeFragment())
 
@@ -65,9 +75,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(){
         }
     }
 
-    private  fun loadFragment(fragment: Fragment){
+    private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container,fragment)
+        transaction.replace(R.id.container, fragment)
         transaction.commit()
     }
 }

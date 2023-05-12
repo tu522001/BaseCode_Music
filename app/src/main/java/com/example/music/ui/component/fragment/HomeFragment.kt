@@ -28,11 +28,17 @@ import java.util.*
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), onClickItemListener {
 
     private val releaseViewModel by activityViewModels<ReleaseViewModel>()
-    private val topTrendingViewModel by viewModels<TopTrendingViewModel>()
-    private val topDownLoadViewModel by viewModels<TopDownLoadViewModel>()
-    private val genresViewModel by viewModels<GenresViewModel>()
-    private val photoAboveViewModel by viewModels<PhotoAboveViewModel>()
-    private val searchViewModel by viewModels<SearchViewModel>()
+    private val topTrendingViewModel by activityViewModels<TopTrendingViewModel>()
+    private val topDownLoadViewModel by activityViewModels<TopDownLoadViewModel>()
+    private val genresViewModel by activityViewModels<GenresViewModel>()
+    private val photoAboveViewModel by activityViewModels<PhotoAboveViewModel>()
+//    private val searchViewModel by viewModels<SearchViewModel>()
+
+//    private val topTrendingViewModel by viewModels<TopTrendingViewModel>()
+//    private val topDownLoadViewModel by viewModels<TopDownLoadViewModel>()
+//    private val genresViewModel by viewModels<GenresViewModel>()
+//    private val photoAboveViewModel by viewModels<PhotoAboveViewModel>()
+//    private val searchViewModel by viewModels<SearchViewModel>()
 
     private lateinit var genresAdapter: GenresAdapter
     private lateinit var newReleaseAdapter: NewReleaseAdapter
@@ -152,11 +158,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), onClickItemListener {
     override fun initData() {
         super.initData()
 //        releaseViewModel.getNetReleaseSongs(page = 1, limit = 20, "release")
-        topTrendingViewModel.getTopTrendingSongs(page = 1, limit = 20, "trending")
-        topDownLoadViewModel.getTopDownLoadSongs(page = 1, limit = 5, "download")
-        genresViewModel.getGenresSongs()
-        photoAboveViewModel.getPhotoAbove()
-        searchViewModel.getSearchSongs(1, 20, "release", "")
+//        topTrendingViewModel.getTopTrendingSongs(page = 1, limit = 20, "trending")
+//        topDownLoadViewModel.getTopDownLoadSongs(page = 1, limit = 5, "download")
+//        genresViewModel.getGenresSongs()
+//        photoAboveViewModel.getPhotoAbove()
+//        searchViewModel.getSearchSongs(1, 20, "release", "")
     }
 
     override fun addObservers() {
@@ -165,7 +171,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), onClickItemListener {
         observe(topTrendingViewModel.topTrendingSongs, ::handleTopTrendingSong)
         observe(topDownLoadViewModel.topDownLoadSongs, ::handleTopDownLoadSong)
         observe(genresViewModel.genresSongs, ::handleGenresSong)
-        observe(searchViewModel.searchSongs, ::handleSearchSong)
+//        observe(searchViewModel.searchSongs, ::handleSearchSong)
     }
 
     private fun handleNewReleaseSong(resource: Resource<ResponseSong>) {
