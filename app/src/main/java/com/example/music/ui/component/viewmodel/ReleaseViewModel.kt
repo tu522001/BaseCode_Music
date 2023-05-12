@@ -14,22 +14,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class ReleaseViewModel @Inject constructor(private val dataRepositoryRepository: DataRepositorySource) :
-    BaseViewModel() {
-
-    private val _newReleaseSongs = MutableLiveData<Resource<ResponseSong>>()
-    val newReleaseSongs: LiveData<Resource<ResponseSong>> get() = _newReleaseSongs
-
-    fun getNetReleaseSongs(page: Int, limit: Int, order: String) {
-        viewModelScope.launch {
-            _newReleaseSongs.value = Resource.Loading()
-            wrapEspressoIdlingResource {
-                dataRepositoryRepository.requestNewReleaseSong(page,limit,order).collect {
-                    _newReleaseSongs.value = it
-                }
-            }
-        }
-    }
-
-}
+//@HiltViewModel
+//class ReleaseViewModel @Inject constructor(private val dataRepositoryRepository: DataRepositorySource) :
+//    BaseViewModel() {
+//
+//    private val _newReleaseSongs = MutableLiveData<Resource<ResponseSong>>()
+//    val newReleaseSongs: LiveData<Resource<ResponseSong>> get() = _newReleaseSongs
+//
+//    fun getNetReleaseSongs(page: Int, limit: Int, order: String) {
+//        viewModelScope.launch {
+//            _newReleaseSongs.value = Resource.Loading()
+//            wrapEspressoIdlingResource {
+//                dataRepositoryRepository.requestNewReleaseSong(page,limit,order).collect {
+//                    _newReleaseSongs.value = it
+//                }
+//            }
+//        }
+//    }
+//
+//}

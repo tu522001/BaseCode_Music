@@ -13,23 +13,23 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class PhotoAboveViewModel @Inject constructor(private val dataRepositoryRepository: DataRepositorySource) :
-    BaseViewModel() {
-
-    private val _photoAbove = MutableLiveData<Resource<ResponseGenres>>()
-    val photoAbove: LiveData<Resource<ResponseGenres>> get() = _photoAbove
-
-    fun getPhotoAbove() {
-        viewModelScope.launch {
-            _photoAbove.value = Resource.Loading()
-            wrapEspressoIdlingResource {
-                dataRepositoryRepository.requestPhotoAbove().collect {
-                    _photoAbove.value = it
-                }
-            }
-        }
-    }
-
-}
+//@HiltViewModel
+//class PhotoAboveViewModel @Inject constructor(private val dataRepositoryRepository: DataRepositorySource) :
+//    BaseViewModel() {
+//
+//    private val _photoAbove = MutableLiveData<Resource<ResponseGenres>>()
+//    val photoAbove: LiveData<Resource<ResponseGenres>> get() = _photoAbove
+//
+//    fun getPhotoAbove() {
+//        viewModelScope.launch {
+//            _photoAbove.value = Resource.Loading()
+//            wrapEspressoIdlingResource {
+//                dataRepositoryRepository.requestPhotoAbove().collect {
+//                    _photoAbove.value = it
+//                }
+//            }
+//        }
+//    }
+//
+//}
 

@@ -14,23 +14,23 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-@HiltViewModel
-class TopTrendingViewModel@Inject constructor(private val dataRepositoryRepository: DataRepositorySource) :
-    BaseViewModel() {
-
-    private val _topTrendingSongs = MutableLiveData<Resource<ResponseSong>>()
-    val topTrendingSongs: LiveData<Resource<ResponseSong>> get() = _topTrendingSongs
-
-
-    fun getTopTrendingSongs(page: Int, limit: Int, order: String) {
-        viewModelScope.launch {
-            _topTrendingSongs.value = Resource.Loading()
-            wrapEspressoIdlingResource {
-                dataRepositoryRepository.requestTopTrendingSong(page,limit,order).collect {
-                    _topTrendingSongs.value = it
-                }
-            }
-        }
-    }
-
-}
+//@HiltViewModel
+//class TopTrendingViewModel@Inject constructor(private val dataRepositoryRepository: DataRepositorySource) :
+//    BaseViewModel() {
+//
+//    private val _topTrendingSongs = MutableLiveData<Resource<ResponseSong>>()
+//    val topTrendingSongs: LiveData<Resource<ResponseSong>> get() = _topTrendingSongs
+//
+//
+//    fun getTopTrendingSongs(page: Int, limit: Int, order: String) {
+//        viewModelScope.launch {
+//            _topTrendingSongs.value = Resource.Loading()
+//            wrapEspressoIdlingResource {
+//                dataRepositoryRepository.requestTopTrendingSong(page,limit,order).collect {
+//                    _topTrendingSongs.value = it
+//                }
+//            }
+//        }
+//    }
+//
+//}

@@ -18,11 +18,19 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    private val releaseViewModel by viewModels<ReleaseViewModel>()
-    private val topTrendingViewModel by viewModels<TopTrendingViewModel>()
-    private val topDownLoadViewModel by viewModels<TopDownLoadViewModel>()
-    private val genresViewModel by viewModels<GenresViewModel>()
-    private val photoAboveViewModel by viewModels<PhotoAboveViewModel>()
+    private val releaseViewModel by viewModels<HomeViewModel>()
+    private val topTrendingViewModel by viewModels<HomeViewModel>()
+    private val topDownLoadViewModel by viewModels<HomeViewModel>()
+    private val genresViewModel by viewModels<HomeViewModel>()
+    private val photoAboveViewModel by viewModels<HomeViewModel>()
+
+    /** Chuyển hết các ViewModel như ReleaseViewModel, TopTrendingViewModel, GenresViewModel, PhotoAboveViewModel
+        gộp lại gọi hết vào cái HomeViewModel để dễ dàng cho việc quản lý ứng dụng */
+//    private val releaseViewModel by viewModels<ReleaseViewModel>()
+//    private val topTrendingViewModel by viewModels<TopTrendingViewModel>()
+//    private val topDownLoadViewModel by viewModels<TopDownLoadViewModel>()
+//    private val genresViewModel by viewModels<GenresViewModel>()
+//    private val photoAboveViewModel by viewModels<PhotoAboveViewModel>()
 
     override fun getViewBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)

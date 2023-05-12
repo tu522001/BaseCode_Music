@@ -27,12 +27,19 @@ import java.util.*
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), onClickItemListener {
 
-    private val releaseViewModel by activityViewModels<ReleaseViewModel>()
-    private val topTrendingViewModel by activityViewModels<TopTrendingViewModel>()
-    private val topDownLoadViewModel by activityViewModels<TopDownLoadViewModel>()
-    private val genresViewModel by activityViewModels<GenresViewModel>()
-    private val photoAboveViewModel by activityViewModels<PhotoAboveViewModel>()
+    private val releaseViewModel by activityViewModels<HomeViewModel>()
+    private val topTrendingViewModel by activityViewModels<HomeViewModel>()
+    private val topDownLoadViewModel by activityViewModels<HomeViewModel>()
+    private val genresViewModel by activityViewModels<HomeViewModel>()
+    private val photoAboveViewModel by activityViewModels<HomeViewModel>()
 //    private val searchViewModel by viewModels<SearchViewModel>()
+
+//    private val releaseViewModel by activityViewModels<ReleaseViewModel>()
+//    private val topTrendingViewModel by activityViewModels<TopTrendingViewModel>()
+//    private val topDownLoadViewModel by activityViewModels<TopDownLoadViewModel>()
+//    private val genresViewModel by activityViewModels<GenresViewModel>()
+//    private val photoAboveViewModel by activityViewModels<PhotoAboveViewModel>()
+////    private val searchViewModel by viewModels<SearchViewModel>()
 
 //    private val topTrendingViewModel by viewModels<TopTrendingViewModel>()
 //    private val topDownLoadViewModel by viewModels<TopDownLoadViewModel>()

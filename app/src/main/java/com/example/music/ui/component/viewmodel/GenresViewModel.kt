@@ -13,22 +13,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class GenresViewModel @Inject constructor(private val dataRepositoryRepository: DataRepositorySource) :
-    BaseViewModel() {
-
-    private val _genresSongs = MutableLiveData<Resource<ResponseGenres>>()
-    val genresSongs: LiveData<Resource<ResponseGenres>> get() = _genresSongs
-
-    fun getGenresSongs() {
-        viewModelScope.launch {
-            _genresSongs.value = Resource.Loading()
-            wrapEspressoIdlingResource {
-                dataRepositoryRepository.requestGenres().collect {
-                    _genresSongs.value = it
-                }
-            }
-        }
-    }
-
-}
+//@HiltViewModel
+//class GenresViewModel @Inject constructor(private val dataRepositoryRepository: DataRepositorySource) :
+//    BaseViewModel() {
+//
+//    private val _genresSongs = MutableLiveData<Resource<ResponseGenres>>()
+//    val genresSongs: LiveData<Resource<ResponseGenres>> get() = _genresSongs
+//
+//    fun getGenresSongs() {
+//        viewModelScope.launch {
+//            _genresSongs.value = Resource.Loading()
+//            wrapEspressoIdlingResource {
+//                dataRepositoryRepository.requestGenres().collect {
+//                    _genresSongs.value = it
+//                }
+//            }
+//        }
+//    }
+//
+//}
